@@ -275,7 +275,8 @@ We have different
 [kafka.cleanup-policy](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#kafka-cleanup-policy) 
 and a [primary key](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#primary-key-constraint) constraint. What do these mean?
 
-NOTE: You can find more information about primary key constraints [here.](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#primary-key-constraint)
+> [!NOTE] 
+> You can find more information about primary key constraints [here.](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#primary-key-constraint)
 
 > [!TIP]
 > The `CREATE TABLE AS` statement does not return since the underlying `INSERT` statement continues to populate the new table.

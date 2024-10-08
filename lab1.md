@@ -310,13 +310,6 @@ CREATE TABLE shoe_products_keyed(
 ```
 (The column name _model_ is now a reserved word, so it needs to be put into backquotes).
 
-Create a new Flink job to copy product data from the original table to the new table. 
-```
-INSERT INTO shoe_products_keyed
-  SELECT id, brand, `name`, sale_price, rating 
-    FROM shoe_products;
-```
-
 Check if only a single record is returned for some product.
 ```
 SELECT * 

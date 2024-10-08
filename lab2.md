@@ -164,17 +164,8 @@ CREATE TABLE shoe_loyalty_levels(
   total BIGINT,
   rewards_level STRING,
   PRIMARY KEY (email) NOT ENFORCED
-);
-```
-
-Now you can calculate loyalty levels and store the results in the new table.
-```
-INSERT INTO shoe_loyalty_levels(
- email,
- total,
- rewards_level)
-SELECT
-  email,
+) AS SELECT
+  COALESCE(email, 'noemail@example.com') AS email,
   SUM(sale_price) AS total,
   CASE
     WHEN SUM(sale_price) > 80000000 THEN 'GOLD'

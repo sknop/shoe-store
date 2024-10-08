@@ -37,7 +37,8 @@ SELECT id,$rowtime
 FROM shoe_customers  
 WHERE id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
-NOTE: Check the timestamps from when the customer records were generated.
+> [!NOTE]
+> Check the timestamps from when the customer records were generated.
 
 Find all orders for one customer and display the timestamps from when the events were ingested in the `shoe_orders` Kafka topic.
 ```
@@ -45,7 +46,8 @@ SELECT order_id, customer_id, $rowtime
 FROM shoe_orders
 WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
-NOTE: Check the timestamps when the orders were generated. This is important for the join operations we will do next.
+> [!NOTE]
+> Check the timestamps when the orders were generated. This is important for the join operations we will do next.
 
 ### 3. Understand Joins
 Now, we can look at the different types of joins available. 
@@ -59,7 +61,8 @@ INNER JOIN shoe_customers
 ON shoe_orders.customer_id = shoe_customers.id
 WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
-NOTE: Look at the number of rows returned. There are many duplicates!
+> [!NOTE]
+> Look at the number of rows returned. There are many duplicates!
 
 Join orders with non-keyed customer records in some time windows (Interval Join):
 ```
@@ -79,7 +82,9 @@ INNER JOIN shoe_customers_keyed
 ON shoe_orders.customer_id = shoe_customers_keyed.customer_id
 WHERE shoe_customers_keyed.customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
-NOTE: Look at the number of rows returned. There are no duplicates! This is because we have only one customer record for each customer id.
+> [!NOTE]
+> Look at the number of rows returned. There are no duplicates! 
+> This is because we have only one customer record for each customer id.
 
 Join orders with keyed customer records at the time when order was created (Temporal Join with Keyed Table):
 ```
@@ -89,9 +94,9 @@ INNER JOIN shoe_customers_keyed FOR SYSTEM_TIME AS OF shoe_orders.`$rowtime`
 ON shoe_orders.customer_id = shoe_customers_keyed.customer_id
 WHERE shoe_customers_keyed.customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
-NOTE 1: There might be empty result set if keyed customers tables was created after the order records were ingested in the shoe_orders topic. 
-
-NOTE 2: You can find more information about Temporal Joins with Flink SQL [here.](https://docs.confluent.io/cloud/current/flink/reference/queries/joins.html#temporal-joins)
+> [!NOTE] 
+> 1. There might be empty result set if keyed customers tables was created after the order records were ingested in the shoe_orders topic. 
+> 2. You can find more information about Temporal Joins with Flink SQL [here.](https://docs.confluent.io/cloud/current/flink/reference/queries/joins.html#temporal-joins)
 
 ### 4. Data Enrichment
 We can store the result of a join in a new table. 
@@ -118,8 +123,7 @@ AS SELECT
   sp.`model`,
   sp.sale_price,
   sp.rating
-FROM 
-shoe_orders so
+FROM shoe_orders so
   INNER JOIN shoe_customers_keyed sc 
     ON so.customer_id = sc.customer_id
   INNER JOIN shoe_products_keyed sp
@@ -149,7 +153,8 @@ SELECT
 FROM shoe_order_customer_product
 GROUP BY email;
 ```
-NOTE: You might need to change the loyalty level numbers according to the amount of the data you have already ingested.
+> [!NOTE]
+> You might need to change the loyalty level numbers according to the amount of the data you have already ingested.
 
 
 Prepare the table for loyalty levels:
@@ -201,7 +206,9 @@ SELECT
  WHERE brand = 'Jones-Stokes'
  GROUP BY email;
  ```
-NOTE: We calculate the number of orders of the brand 'Jones-Stokes' for each customer and offer a free product if it's their 10th order.
+> [!NOTE]
+> We calculate the number of orders of the brand 'Jones-Stokes' for each customer 
+> and offer a free product if it's their 10th order.
 
 Find which customers have ordered related brands in large volumes.
 ```
@@ -214,7 +221,9 @@ SELECT
   GROUP BY email
   HAVING COUNT(DISTINCT brand) = 2 AND COUNT(brand) > 10;
 ```
-NOTE: We sum all orders of brands 'Braun-Bruen' and 'Will Inc' for each customer and offer a special promotion if the sum is larger than ten.  
+> [!NOTE]
+> We sum all orders of brands 'Braun-Bruen' and 'Will Inc' for each customer 
+> and offer a special promotion if the sum is larger than ten.  
 
 Now we are ready to store the results for all calculated promotions. 
 

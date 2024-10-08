@@ -38,7 +38,8 @@ Check if the following Avro schemas exist in your Schema Registry:
  * shoe_customers-value,
  * shoe_orders-value.
 
-NOTE: Schema Registry is at the Environment level and can be used for multiple Kafka clusters.
+> [!NOTE]
+> Schema Registry is at the Environment level and can be used for multiple Kafka clusters.
 
 ### Datagen Connectors
 Your Kafka cluster should have three Datagen Source Connectors running. Check if their topic and template configurations match the table below.
@@ -97,7 +98,8 @@ You can use your web browser or console to enter Flink SQL statements.
   confluent flink shell --compute-pool <pool id> --environment <env-id>
   ```
 
-NOTE: You can also access your Flink Compute Pool from the Data Portal as shown below. Just click on `Data Portal` in the main menu on the left side. Then select your Environment. You should see your topics. When you click on any of the topic tiles you can query the topic's data using Flink. 
+> [!NOTE]
+> You can also access your Flink Compute Pool from the Data Portal as shown below. Just click on `Data Portal` in the main menu on the left side. Then select your Environment. You should see your topics. When you click on any of the topic tiles you can query the topic's data using Flink. 
 
 Data Portal: Kafka Topics Tiles
 ![image](terraform/img/dataPortal1.png)
@@ -218,7 +220,8 @@ GROUP BY brand;
 ```
 
 
-NOTE: You can find more information about Flink aggregations functions [here.](https://docs.confluent.io/cloud/current/flink/reference/functions/aggregate-functions.html)
+> [!NOTE]
+> You can find more information about Flink aggregations functions [here.](https://docs.confluent.io/cloud/current/flink/reference/functions/aggregate-functions.html)
 
 ### 7. Time Windows
 
@@ -245,7 +248,8 @@ FROM TABLE(
 GROUP BY window_start, window_end;
 ```
 
-NOTE: You can find more information about Flink Window aggregations [here.](https://docs.confluent.io/cloud/current/flink/reference/queries/window-tvf.html)
+> [!NOTE]
+> You can find more information about Flink Window aggregations [here.](https://docs.confluent.io/cloud/current/flink/reference/queries/window-tvf.html)
 
 ### 8. Tables with Primary Key 
 

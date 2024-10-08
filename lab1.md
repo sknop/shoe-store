@@ -277,10 +277,10 @@ and a [primary key](https://docs.confluent.io/cloud/current/flink/reference/stat
 
 NOTE: You can find more information about primary key constraints [here.](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#primary-key-constraint)
 
-[!TIP]
-The `CREATE TABLE AS` statement does not return since the underlying `INSERT` statement continues to populate the new table.
-In the UI, you need to open a workspace with the '+' button if you do not want to stop the statement. In the Confluent CLI,
-you can detach from the statement by pressing `Enter` when prompted.
+> [!TIP]
+> The `CREATE TABLE AS` statement does not return since the underlying `INSERT` statement continues to populate the new table.
+> In the UI, you need to open a workspace with the '+' button if you do not want to stop the statement. In the Confluent CLI,
+> you can detach from the statement by pressing `Enter` when prompted.
 
 Show the amount of customers in `shoe_customers_keyed`.
 ```

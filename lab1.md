@@ -264,14 +264,23 @@ CREATE TABLE shoe_customers_keyed (
    'kafka.cleanup-policy' = 'compact'
 ) AS SELECT id `customer_id`, first_name, last_name, email from `shoe_customers`;
 ```
+
 Compare the new table `shoe_customers_keyed` with `shoe_customers`, what is the difference?
 
 ```bash
 SHOW CREATE TABLE shoe_customers_keyed;
 ```
-We have different [changelog.mode](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#changelog-mode) and a [primary key](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#primary-key-constraint) constraint. What does this mean?
+We have different 
+[changelog.mode](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#changelog-mode),
+[kafka.cleanup-policy](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#kafka-cleanup-policy) 
+and a [primary key](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#primary-key-constraint) constraint. What do these mean?
 
 NOTE: You can find more information about primary key constraints [here.](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#primary-key-constraint)
+
+[!TIP]
+The `CREATE TABLE AS` statement does not return since the underlying `INSERT` statement continues to populate the new table.
+In the UI, you need to open a workspace with the '+' button if you do not want to stop the statement. In the Confluent CLI,
+you can detach from the statement by pressing `Enter` when prompted.
 
 Show the amount of customers in `shoe_customers_keyed`.
 ```

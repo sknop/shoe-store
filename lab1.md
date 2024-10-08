@@ -253,31 +253,27 @@ Flink allows you to define a primary key for your table. The primary key is a co
 
 Let's create a new table that will store unique customers only.
 ```
-CREATE TABLE shoe_customers_keyed(
+CREATE TABLE shoe_customers_keyed (
   customer_id STRING,
   first_name STRING,
   last_name STRING,
   email STRING,
   PRIMARY KEY (customer_id) NOT ENFORCED
-  );
+) WITH (
+   'changelog.mode' = 'upsert',
+   'kafka.cleanup-policy' = 'compact'
+) AS SELECT id `customer_id`, first_name, last_name, email from `shoe_customers`;
 ```
 Compare the new table `shoe_customers_keyed` with `shoe_customers`, what is the difference?
 
 ```bash
 SHOW CREATE TABLE shoe_customers_keyed;
 ```
-We do have a different [changelog.mode](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#changelog-mode) and a [primary key](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#primary-key-constraint) constraint. What does this mean?
+We have different [changelog.mode](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#changelog-mode) and a [primary key](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#primary-key-constraint) constraint. What does this mean?
 
 NOTE: You can find more information about primary key constraints [here.](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#primary-key-constraint)
 
-Create a new Flink job to copy customer data from the original table to the new table.
-```
-INSERT INTO shoe_customers_keyed
-  SELECT id, first_name, last_name, email
-    FROM shoe_customers;
-```
-
-Show the amount of cutomers in `shoe_customers_keyed`.
+Show the amount of customers in `shoe_customers_keyed`.
 ```
 SELECT COUNT(*) as AMOUNTROWS FROM shoe_customers_keyed;
 ```
@@ -303,12 +299,16 @@ Prepare a new table that will store unique products only:
 CREATE TABLE shoe_products_keyed(
   product_id STRING,
   brand STRING,
-  model STRING,
+  `model` STRING,
   sale_price INT,
   rating DOUBLE,
   PRIMARY KEY (product_id) NOT ENFORCED
-  );
+  ) WITH (
+   'changelog.mode' = 'upsert',
+   'kafka.cleanup-policy' = 'compact')
+  AS SELECT id `product_id`, brand, `name` `model`, sale_price, rating FROM shoe_products;
 ```
+(The column name _model_ is now a reserved word, so it needs to be put into backquotes).
 
 Create a new Flink job to copy product data from the original table to the new table. 
 ```
@@ -326,7 +326,7 @@ SELECT *
 
 ### 9. Flink Jobs 
 
-Now, you can finally check which jobs are still running, which jobs failed, and which stopped. Go to `Flink (Preview)` in environments and choose `Flink Statements`. Check what you can do here.
+Now, you can finally check which jobs are still running, which jobs failed, and which stopped. Go to `Flink` in environments and choose `Flink Statements`. Check what you can do here.
 ![image](terraform/img/flink_jobs.png)
 
 You can also  use the Confluent CLI:

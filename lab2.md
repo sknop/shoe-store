@@ -105,36 +105,21 @@ CREATE TABLE shoe_order_customer_product(
   last_name STRING,
   email STRING,
   brand STRING,
-  model STRING,
+  `model` STRING,
   sale_price INT,
   rating DOUBLE
-)WITH (
-    'changelog.mode' = 'retract'
-);
-```
-
-Insert joined data from 3 tables into the new table:
-```
-INSERT INTO shoe_order_customer_product(
-  order_id,
-  first_name,
-  last_name,
-  email,
-  brand,
-  model,
-  sale_price,
-  rating)
-SELECT
+)
+AS SELECT 
   so.order_id,
   sc.first_name,
   sc.last_name,
   sc.email,
   sp.brand,
-  sp.model,
+  sp.`model`,
   sp.sale_price,
   sp.rating
 FROM 
-  shoe_orders so
+shoe_orders so
   INNER JOIN shoe_customers_keyed sc 
     ON so.customer_id = sc.customer_id
   INNER JOIN shoe_products_keyed sp

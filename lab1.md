@@ -284,8 +284,11 @@ and a [primary key](https://docs.confluent.io/cloud/current/flink/reference/stat
 
 > [!TIP]
 > The `CREATE TABLE AS` statement does not return since the underlying `INSERT` statement continues to populate the new table.
-> In the UI, you need to open a workspace with the '+' button if you do not want to stop the statement. In the Confluent CLI,
-> you can detach from the statement by pressing `Enter` when prompted.
+> You do not want to stop that statement. In the UI, you can either open a new workspace with the '+' button or
+> you can replace the "CREATE TABLE AS" statement with a new statement and then use "CMD-ENTER" (on Mac) or "WIN-ENTER" 
+> (on Windows) to run it while keeping the old command going.
+> 
+> In the Confluent CLI, you can simply detach from the statement by pressing `Enter` when prompted.
 
 Show the amount of customers in `shoe_customers_keyed`.
 ```
@@ -340,20 +343,20 @@ You can also  use the Confluent CLI:
 ```bash
 confluent login
 confluent flink statement list --cloud aws --region eu-central-1 --environment <your env-id> --compute-pool <your pool id>
-#          Creation Date         |        Name        |           Statement            | Compute Pool |  Status   |              Status Detail               
-#--------------------------------+--------------------+--------------------------------+--------------+-----------+------------------------------------------
-#...
-# 2023-11-15 16:14:38 +0000 UTC | f041ae19-c932-403f | CREATE TABLE                   | lfcp-jvv9jq  | COMPLETED | Table 'shoe_customers_keyed'             
-#                                |                    | shoe_customers_keyed(          |              |           | created                                  
-#                                |                    |  customer_id STRING,           |              |           |                                          
-#                                |                    | first_name STRING,   last_name |              |           |                                          
-#                                |                    | STRING,   email STRING,        |              |           |                                          
-#                                |                    | PRIMARY KEY (customer_id) NOT  |              |           |                                          
-#                                |                    | ENFORCED   );                  |              |           |                                          
-# ....
-# Exceptions
-confluent flink statement exception list <name> --cloud aws --region eu-central-1 --environment <your env-id>
-# Descriobe Statements
+  2024-10-08 09:25:31.297459     | cli-2024-10-08-102531-f7b828c3-0141-48cf-b74b-4db6172d900a       | CREATE TABLE                            | lfcp-pxg625  | RUNNING   |
+  +0000 UTC                      |                                                                  | shoe_customers_keyed (                  |              |           |
+                                 |                                                                  |   customer_id STRING,                   |              |           |
+                                 |                                                                  | first_name STRING,   last_name          |              |           |
+                                 |                                                                  | STRING,   email STRING,                 |              |           |
+                                 |                                                                  | PRIMARY KEY (customer_id)               |              |           |
+                                 |                                                                  | NOT ENFORCED ) WITH (                   |              |           |
+                                 |                                                                  | 'changelog.mode' = 'upsert',            |              |           |
+                                 |                                                                  |    'kafka.cleanup-policy'               |              |           |
+                                 |                                                                  | = 'compact' ) AS SELECT id              |              |           |
+                                 |                                                                  | `customer_id`, first_name,              |              |           |
+                                 |                                                                  | last_name, email from                   |              |           |
+                                 |                                                                  | `shoe_customers`;                       |              |           |onfluent flink statement exception list <name> --cloud aws --region eu-central-1 --environment <your env-id>
+# Describe Statements
 confluent flink statement describe <name> --cloud aws --region eu-central-1 --environment <your env-id>
 ```
 

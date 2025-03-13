@@ -46,7 +46,7 @@ The environment is ready to work and will create a Schema Registry in the region
 Next, create a Basic Cluster in your chosen environment based on the rule above.
 Click the button `Create cluster` 
 * choose BASIC and the `Begin configuration` button to start the cluster creation config.
-* Choose your preferred region with Flink support with a single zone and click `Continue`
+* Choose your preferred region with a single zone and click `Continue`
 * Give the cluster a name, e.g. `cc_handson_cluster` and check rate card overview and configs, then press `Launch cluster` 
 
 The cluster will be up and running in seconds.

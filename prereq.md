@@ -61,6 +61,7 @@ Now, we need three topics to store our events.
 Via the GUI the topic creation is straightforward.
 Create a topic by clicking (left.hand menu) Topics and then clicking the `Create topic` button.
 * Topic name: shoe_products, Partitions: 1 and then click the `Create with defaults` button
+* Skip adding a data contract
 * Repeat the same steps for shoe_customers and shoe_orders 
 
 Three topics are created.

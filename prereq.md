@@ -36,11 +36,9 @@ If you want to use the CLI, you must [install the CLI](https://docs.confluent.io
 Login into Confluent Cloud and create an environment with Schema Registry:
 * Click the `Add cloud environment`  button
 * Enter a New environment name e.g. `handson-flink` and push the `create` button
-* Choose Essentials Stream Governance package and click `Begin configuration`
-        * Choose a free region (usually AWS - eu-central-1 in Europe).
-        * Click the button `Enable`
+* Choose Essentials Stream Governance package
 
-The environment is ready to work and includes a Schema Registry in the chosen region.
+The environment is ready to work and will create a Schema Registry in the region of the first cluster.
 ![image](terraform/img/environment.png)
 
 ### Create Kafka Cluster in Environment `handson-flink`

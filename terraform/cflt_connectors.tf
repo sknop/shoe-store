@@ -265,9 +265,9 @@ resource "confluent_kafka_topic" "orders" {
 # --------------------------------------------------------
 resource "confluent_tag" "pii" {
   schema_registry_cluster {
-    id = confluent_schema_registry_cluster.cc_sr_cluster.id
+    id = data.confluent_schema_registry_cluster.cc_sr_cluster.id
   }
-  rest_endpoint = confluent_schema_registry_cluster.cc_sr_cluster.rest_endpoint
+  rest_endpoint = data.confluent_schema_registry_cluster.cc_sr_cluster.rest_endpoint
   credentials {
     key    = confluent_api_key.sr_cluster_key.id
     secret = confluent_api_key.sr_cluster_key.secret
@@ -282,9 +282,9 @@ resource "confluent_tag" "pii" {
 }
 resource "confluent_tag" "public" {
   schema_registry_cluster {
-    id = confluent_schema_registry_cluster.cc_sr_cluster.id
+    id = data.confluent_schema_registry_cluster.cc_sr_cluster.id
   }
-  rest_endpoint = confluent_schema_registry_cluster.cc_sr_cluster.rest_endpoint
+  rest_endpoint = data.confluent_schema_registry_cluster.cc_sr_cluster.rest_endpoint
   credentials {
     key    = confluent_api_key.sr_cluster_key.id
     secret = confluent_api_key.sr_cluster_key.secret
@@ -302,16 +302,16 @@ resource "confluent_tag" "public" {
 # --------------------------------------------------------
 resource "confluent_tag_binding" "customers" {
   schema_registry_cluster {
-    id = confluent_schema_registry_cluster.cc_sr_cluster.id
+    id = data.confluent_schema_registry_cluster.cc_sr_cluster.id
   }
-  rest_endpoint = confluent_schema_registry_cluster.cc_sr_cluster.rest_endpoint
+  rest_endpoint = data.confluent_schema_registry_cluster.cc_sr_cluster.rest_endpoint
   credentials {
     key    = confluent_api_key.sr_cluster_key.id
     secret = confluent_api_key.sr_cluster_key.secret
   }
 
   tag_name = "PII"
-  entity_name = "${confluent_schema_registry_cluster.cc_sr_cluster.id}:${confluent_kafka_cluster.cc_kafka_cluster.id}:${confluent_kafka_topic.customers.topic_name}"
+  entity_name = "${data.confluent_schema_registry_cluster.cc_sr_cluster.id}:${confluent_kafka_cluster.cc_kafka_cluster.id}:${confluent_kafka_topic.customers.topic_name}"
   entity_type = "kafka_topic"
 
   lifecycle {
@@ -321,16 +321,16 @@ resource "confluent_tag_binding" "customers" {
 
 resource "confluent_tag_binding" "products" {
   schema_registry_cluster {
-    id = confluent_schema_registry_cluster.cc_sr_cluster.id
+    id = data.confluent_schema_registry_cluster.cc_sr_cluster.id
   }
-  rest_endpoint = confluent_schema_registry_cluster.cc_sr_cluster.rest_endpoint
+  rest_endpoint = data.confluent_schema_registry_cluster.cc_sr_cluster.rest_endpoint
   credentials {
     key    = confluent_api_key.sr_cluster_key.id
     secret = confluent_api_key.sr_cluster_key.secret
   }
 
   tag_name = "Public"
-  entity_name = "${confluent_schema_registry_cluster.cc_sr_cluster.id}:${confluent_kafka_cluster.cc_kafka_cluster.id}:${confluent_kafka_topic.products.topic_name}"
+  entity_name = "${data.confluent_schema_registry_cluster.cc_sr_cluster.id}:${confluent_kafka_cluster.cc_kafka_cluster.id}:${confluent_kafka_topic.products.topic_name}"
   entity_type = "kafka_topic"
 
   lifecycle {
@@ -340,16 +340,16 @@ resource "confluent_tag_binding" "products" {
 
 resource "confluent_tag_binding" "orders" {
   schema_registry_cluster {
-    id = confluent_schema_registry_cluster.cc_sr_cluster.id
+    id = data.confluent_schema_registry_cluster.cc_sr_cluster.id
   }
-  rest_endpoint = confluent_schema_registry_cluster.cc_sr_cluster.rest_endpoint
+  rest_endpoint = data.confluent_schema_registry_cluster.cc_sr_cluster.rest_endpoint
   credentials {
     key    = confluent_api_key.sr_cluster_key.id
     secret = confluent_api_key.sr_cluster_key.secret
   }
 
   tag_name = "Public"
-  entity_name = "${confluent_schema_registry_cluster.cc_sr_cluster.id}:${confluent_kafka_cluster.cc_kafka_cluster.id}:${confluent_kafka_topic.orders.topic_name}"
+  entity_name = "${data.confluent_schema_registry_cluster.cc_sr_cluster.id}:${confluent_kafka_cluster.cc_kafka_cluster.id}:${confluent_kafka_topic.orders.topic_name}"
   entity_type = "kafka_topic"
 
   lifecycle {

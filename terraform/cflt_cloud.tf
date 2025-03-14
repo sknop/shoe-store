@@ -3,6 +3,11 @@
 # -------------------------------------------------------
 resource "confluent_environment" "cc_handson_env" {
   display_name = "${var.use_prefix}${var.cc_env_name}-${random_id.id.hex}"
+
+  stream_governance {
+    package = "ESSENTIALS"
+  }
+
   lifecycle {
     prevent_destroy = false
   }
@@ -11,22 +16,14 @@ resource "confluent_environment" "cc_handson_env" {
 # --------------------------------------------------------
 # Schema Registry
 # --------------------------------------------------------
-data "confluent_schema_registry_region" "cc_handson_sr" {
-  cloud   = var.sr_cloud_provider
-  region  = var.sr_cloud_region
-  package = var.sr_package
-}
-resource "confluent_schema_registry_cluster" "cc_sr_cluster" {
-  package = data.confluent_schema_registry_region.cc_handson_sr.package
+
+data "confluent_schema_registry_cluster" "cc_sr_cluster" {
   environment {
     id = confluent_environment.cc_handson_env.id
   }
-  region {
-    id = data.confluent_schema_registry_region.cc_handson_sr.id
-  }
-  lifecycle {
-    prevent_destroy = false
-  }
+  depends_on = [
+    confluent_kafka_cluster.cc_kafka_cluster
+  ]
 }
 
 # --------------------------------------------------------

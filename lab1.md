@@ -7,7 +7,7 @@ All required resources in Confluent Cloud must be already created for this lab t
 
 [1. Verify Confluent Cloud Resources](lab1.md#1-verify-confluent-cloud-resources)
 
-[2. Create Pool](lab1.md#2-create-pool)
+[2. Create Pool](lab1.md#2-create-flink-compute-pool)
 
 [3. Connecting to Flink](lab1.md#3-connecting-to-flink)
 

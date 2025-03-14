@@ -50,26 +50,9 @@ Your Kafka cluster should have three Datagen Source Connectors running. Check if
 | **DatagenSourceConnector_customers** | shoe_customers  |   AVRO |  **Shoes customers** | 
 | **DatagenSourceConnector_orders**    |   shoe_orders   |   AVRO |     **Shoes orders** | 
 
-## 2. Create Pool
-
-IMPORTANT TO KNOW FOR THE WORKSHOP:
-We run in AWS (Azure has been added recently). Currently we do support [8 Regions](https://docs.confluent.io/cloud/current/flink/op-supported-features-and-limitations.html#flink-sql-cloud-regions) within AWS cloud.
-
-### If you are participating onsite in Berlin
-The complete onsite team is working in region: `eu-central-1`. (No changes in the guides (both Terraform and manual) necessary.)
-
-### If you are participating online via zoom
-The online team is working in different regions:
- - Attendees with Lastname first Letter A-I working in region `us-east-1` 
-     * Flink SQL Pool in `us-east-1`
- - Attendees with Lastname first Letter J-R working in region `us-east-2` 
-     * Flink SQL Pool in `us-east-2`
- - Attendees with Lastname first Letter S-Z working in region `eu-west-1` 
-     * Flink SQL Pool in `eu-west-1`
-
-### Create Flink Compute Pool
-Create a Flink Compute Pool in environment `handson-flink`. Now go back to environment `handson-flink` and choose the `Flink (preview)` Tab. From there we create a new compute pool:
-* choose AWS region (remember the Lastname rule above), click `continue` and 
+## 2. Create Flink Compute Pool
+Create a Flink Compute Pool in environment `handson-flink`. Now go back to environment `handson-flink` and choose the `Flink ` Tab. From there we create a new compute pool:
+* choose the cloud provider and region of your cluster, click `continue` and 
 * enter Pool Name: `cc_flink_compute_pool` with 10 Confluent Flink Units (CFU) and 
 * click `Continue` button and then `Finish`.
 * 
@@ -81,7 +64,7 @@ AWS Pools take 1-2 minutes. Azure Pools can take 5-7 minutes as of today (Januar
 
 ## 3. Connecting to Flink 
 You can use your web browser or console to enter Flink SQL statements.
-  * **Web UI** - click on the button `Open SQL workspace` on your Flink Compute Pool
+  * **Web UI** - click on the button `Open SQL workspace` on your Flink Compute Pool. You might have to refresh your browser window to enable the "Open SQL workspace" button.
     You now have to set which catalog and database you want to use:
     - Set the environment name `handson-flink` as catalog,
     - and the cluster name `cc_handson_cluster` as database

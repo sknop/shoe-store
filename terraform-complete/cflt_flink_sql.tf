@@ -51,6 +51,9 @@ resource "confluent_flink_statement" "create_shoe_customers_keyed" {
   organization {
     id = data.confluent_organization.private.id
   }
+  environment {
+    id = confluent_environment.cc_handson_env.id
+  }
   principal {
     id = confluent_service_account.app_manager.id
   }

@@ -30,6 +30,9 @@ data "confluent_flink_region" "cc_flink_compute_pool_region" {
   region = confluent_flink_compute_pool.cc_flink_compute_pool.region
 }
 
+data "confluent_organization" "private" {
+}
+
 # --------------------------------------------------------
 # Flink SQL: CREATE TABLE shoe_customers_keyed
 # --------------------------------------------------------
@@ -44,6 +47,9 @@ resource "confluent_flink_statement" "create_shoe_customers_keyed" {
   ]
   compute_pool {
     id = confluent_flink_compute_pool.cc_flink_compute_pool.id
+  }
+  organization {
+    id = data.confluent_organization.private.id
   }
   principal {
     id = confluent_service_account.app_manager.id
@@ -79,6 +85,9 @@ resource "confluent_flink_statement" "create_shoe_products_keyed" {
   ]    
   compute_pool {
     id = confluent_flink_compute_pool.cc_flink_compute_pool.id
+  }
+  organization {
+    id = data.confluent_organization.private.id
   }
   principal {
     id = confluent_service_account.app_manager.id
@@ -117,6 +126,9 @@ resource "confluent_flink_statement" "create_shoe_order_customer_product" {
   compute_pool {
     id = confluent_flink_compute_pool.cc_flink_compute_pool.id
   }
+  organization {
+    id = data.confluent_organization.private.id
+  }
   principal {
     id = confluent_service_account.app_manager.id
   }
@@ -145,6 +157,9 @@ resource "confluent_flink_statement" "create_shoe_loyalty_levels" {
   ]    
   compute_pool {
     id = confluent_flink_compute_pool.cc_flink_compute_pool.id
+  }
+  organization {
+    id = data.confluent_organization.private.id
   }
   principal {
     id = confluent_service_account.app_manager.id
@@ -176,6 +191,9 @@ resource "confluent_flink_statement" "create_shoe_promotions" {
   compute_pool {
     id = confluent_flink_compute_pool.cc_flink_compute_pool.id
   }
+  organization {
+    id = data.confluent_organization.private.id
+  }
   principal {
     id = confluent_service_account.app_manager.id
   }
@@ -204,6 +222,9 @@ resource "confluent_flink_statement" "insert_shoe_promotion" {
   ]    
   compute_pool {
     id = confluent_flink_compute_pool.cc_flink_compute_pool.id
+  }
+  organization {
+    id = data.confluent_organization.private.id
   }
   principal {
     id = confluent_service_account.app_manager.id

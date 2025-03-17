@@ -136,24 +136,6 @@ resource "confluent_role_binding" "app_manager_assigner" {
   }
 }
 
-
-resource "confluent_role_binding" "sr_environment_admin" {
-  principal   = "User:${confluent_service_account.sr.id}"
-  role_name   = "EnvironmentAdmin"
-  crn_pattern = confluent_environment.cc_handson_env.resource_name
-  lifecycle {
-    prevent_destroy = false
-  }
-}
-resource "confluent_role_binding" "clients_cluster_admin" {
-  principal   = "User:${confluent_service_account.clients.id}"
-  role_name   = "CloudClusterAdmin"
-  crn_pattern = confluent_kafka_cluster.cc_kafka_cluster.rbac_crn
-  lifecycle {
-    prevent_destroy = false
-  }
-}
-
 # --------------------------------------------------------
 # Credentials / API Keys
 # --------------------------------------------------------

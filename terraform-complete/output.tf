@@ -7,21 +7,6 @@ output "cc_hands_env" {
   value       = confluent_environment.cc_handson_env.id
 }
 
-output "cc_handson_sr" {
-  description = "CC Schema Registry Region"
-  value       = data.confluent_schema_registry_region.cc_handson_sr
-}
-
-output "cc_sr_cluster" {
-  description = "CC SR Cluster ID"
-  value       = confluent_schema_registry_cluster.cc_sr_cluster.id
-}
-
-output "cc_sr_cluster_endpoint" {
-  description = "CC SR Cluster ID"
-  value       = confluent_schema_registry_cluster.cc_sr_cluster.rest_endpoint
-}
-
 output "cc_kafka_cluster" {
   description = "CC Kafka Cluster ID"
   value       = confluent_kafka_cluster.cc_kafka_cluster.id

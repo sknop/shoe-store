@@ -58,24 +58,6 @@ variable "cc_availability" {
   default = "SINGLE_ZONE"
 }
 
-# ------------------------------------------
-# Confluent Cloud Schema Registry variables
-# ------------------------------------------
-variable "sr_cloud_provider" {
-  type    = string
-  default = "AWS"
-}
-
-variable "sr_cloud_region" {
-  type    = string
-  default = "eu-central-1"
-}
-
-variable "sr_package" {
-  type    = string
-  default = "ESSENTIALS"
-}
-
 # --------------------------------------------
 # Confluent Cloud Connectors name
 # --------------------------------------------
@@ -99,20 +81,10 @@ variable "cc_connector_dsoc_orders_name" {
 # --------------------------------------------
 variable "cc_display_name" {
   type    = string
-  default = "standard_compute_pool"
-}
-
-variable "cc_compute_pool_name" {
-  type    = string
-  default = "cc_handson_flink"
+  default = "shoe_compute_pool"
 }
 
 variable "cc_compute_pool_cfu" {
   type    = number
   default = 5
-}
-
-variable "cc_compute_pool_region" {
-  type    = string
-  default = "aws.eu-central-1"
 }

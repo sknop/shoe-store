@@ -3,6 +3,11 @@
 # -------------------------------------------------------
 resource "confluent_environment" "cc_handson_env" {
   display_name = "${var.use_prefix}${var.cc_env_name}-${random_id.id.hex}"
+
+  stream_governance {
+    package = "ESSENTIALS"
+  }
+
   lifecycle {
     prevent_destroy = false
   }
@@ -11,22 +16,14 @@ resource "confluent_environment" "cc_handson_env" {
 # --------------------------------------------------------
 # Schema Registry
 # --------------------------------------------------------
-data "confluent_schema_registry_region" "cc_handson_sr" {
-  cloud   = var.sr_cloud_provider
-  region  = var.sr_cloud_region
-  package = var.sr_package
-}
-resource "confluent_schema_registry_cluster" "cc_sr_cluster" {
-  package = data.confluent_schema_registry_region.cc_handson_sr.package
+
+data "confluent_schema_registry_cluster" "cc_sr_cluster" {
   environment {
     id = confluent_environment.cc_handson_env.id
   }
-  region {
-    id = data.confluent_schema_registry_region.cc_handson_sr.id
-  }
-  lifecycle {
-    prevent_destroy = false
-  }
+  depends_on = [
+    confluent_kafka_cluster.cc_kafka_cluster
+  ]
 }
 
 # --------------------------------------------------------
@@ -65,6 +62,11 @@ resource "confluent_flink_compute_pool" "cc_flink_compute_pool" {
   }
 }
 
+data "confluent_flink_region" "cc_flink_compute_pool_region" {
+  cloud = confluent_flink_compute_pool.cc_flink_compute_pool.cloud
+  region = confluent_flink_compute_pool.cc_flink_compute_pool.region
+}
+
 # --------------------------------------------------------
 # Service Accounts (app_manager, sr, clients)
 # --------------------------------------------------------
@@ -101,10 +103,18 @@ resource "confluent_role_binding" "app_manager_environment_admin" {
     prevent_destroy = false
   }
 }
-resource "confluent_role_binding" "app_manager_flinkdeveloper" {
-  principal   = "User:${confluent_service_account.app_manager.id}"
-  role_name   = "FlinkDeveloper"
+resource "confluent_role_binding" "sr_environment_admin" {
+  principal   = "User:${confluent_service_account.sr.id}"
+  role_name   = "EnvironmentAdmin"
   crn_pattern = confluent_environment.cc_handson_env.resource_name
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+resource "confluent_role_binding" "clients_cluster_admin" {
+  principal   = "User:${confluent_service_account.clients.id}"
+  role_name   = "CloudClusterAdmin"
+  crn_pattern = confluent_kafka_cluster.cc_kafka_cluster.rbac_crn
   lifecycle {
     prevent_destroy = false
   }
@@ -181,9 +191,9 @@ resource "confluent_api_key" "sr_cluster_key" {
     kind        = confluent_service_account.sr.kind
   }
   managed_resource {
-    id          = confluent_schema_registry_cluster.cc_sr_cluster.id
-    api_version = confluent_schema_registry_cluster.cc_sr_cluster.api_version
-    kind        = confluent_schema_registry_cluster.cc_sr_cluster.kind
+    id          = data.confluent_schema_registry_cluster.cc_sr_cluster.id
+    api_version = data.confluent_schema_registry_cluster.cc_sr_cluster.api_version
+    kind        = data.confluent_schema_registry_cluster.cc_sr_cluster.kind
     environment {
       id = confluent_environment.cc_handson_env.id
     }

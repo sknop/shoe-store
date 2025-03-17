@@ -89,6 +89,9 @@ resource "confluent_flink_statement" "create_shoe_products_keyed" {
   organization {
     id = data.confluent_organization.private.id
   }
+  environment {
+    id = confluent_environment.cc_handson_env.id
+  }
   principal {
     id = confluent_service_account.app_manager.id
   }
@@ -129,6 +132,9 @@ resource "confluent_flink_statement" "create_shoe_order_customer_product" {
   organization {
     id = data.confluent_organization.private.id
   }
+  environment {
+    id = confluent_environment.cc_handson_env.id
+  }
   principal {
     id = confluent_service_account.app_manager.id
   }
@@ -160,6 +166,9 @@ resource "confluent_flink_statement" "create_shoe_loyalty_levels" {
   }
   organization {
     id = data.confluent_organization.private.id
+  }
+  environment {
+    id = confluent_environment.cc_handson_env.id
   }
   principal {
     id = confluent_service_account.app_manager.id
@@ -194,6 +203,9 @@ resource "confluent_flink_statement" "create_shoe_promotions" {
   organization {
     id = data.confluent_organization.private.id
   }
+  environment {
+    id = confluent_environment.cc_handson_env.id
+  }
   principal {
     id = confluent_service_account.app_manager.id
   }
@@ -225,6 +237,9 @@ resource "confluent_flink_statement" "insert_shoe_promotion" {
   }
   organization {
     id = data.confluent_organization.private.id
+  }
+  environment {
+    id = confluent_environment.cc_handson_env.id
   }
   principal {
     id = confluent_service_account.app_manager.id

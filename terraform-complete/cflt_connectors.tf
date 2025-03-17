@@ -405,8 +405,8 @@ resource "confluent_connector" "datagen_customers" {
   }
   config_sensitive = {}
   config_nonsensitive = {
-    "connector.class"          = "DatagenSource"
     "name"                     = "${var.use_prefix}${var.cc_connector_dsoc_customers_name}"
+    "connector.class"          = "DatagenSource"
     "kafka.auth.mode"          = "SERVICE_ACCOUNT"
     "kafka.service.account.id" = confluent_service_account.connectors.id
     "kafka.topic"              = confluent_kafka_topic.customers.topic_name

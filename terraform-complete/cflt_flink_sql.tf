@@ -1,3 +1,34 @@
+# --------------------------------------------------------
+# Flink API Keys
+# --------------------------------------------------------
+resource "confluent_api_key" "env-manager-flink-api-key" {
+  display_name = "env-manager-flink-api-${confluent_environment.cc_handson_env.display_name}-key-${random_id.id.hex}"
+  description  = "Flink API Key that is owned by 'env-manager' service account"
+  owner {
+    id          = confluent_service_account.app_manager.id
+    api_version = confluent_service_account.app_manager.api_version
+    kind        = confluent_service_account.app_manager.kind
+  }
+
+  managed_resource {
+    id          = var.cc_cloud_region
+    api_version = "fcpm/v2"
+    kind        = "Region"
+
+    environment {
+      id = confluent_environment.cc_handson_env.id
+    }
+  }
+
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+
+data "confluent_flink_region" "cc_flink_compute_pool_region" {
+  cloud = confluent_flink_compute_pool.cc_flink_compute_pool.cloud
+  region = confluent_flink_compute_pool.cc_flink_compute_pool.region
+}
 
 # --------------------------------------------------------
 # Flink SQL: CREATE TABLE shoe_customers_keyed

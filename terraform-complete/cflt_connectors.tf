@@ -310,7 +310,7 @@ resource "confluent_tag_binding" "customers" {
     secret = confluent_api_key.sr_cluster_key.secret
   }
 
-  tag_name = "PII"
+  tag_name = confluent_tag.pii.name
   entity_name = "${data.confluent_schema_registry_cluster.cc_sr_cluster.id}:${confluent_kafka_cluster.cc_kafka_cluster.id}:${confluent_kafka_topic.customers.topic_name}"
   entity_type = "kafka_topic"
 
@@ -329,7 +329,7 @@ resource "confluent_tag_binding" "products" {
     secret = confluent_api_key.sr_cluster_key.secret
   }
 
-  tag_name = "Public"
+  tag_name = confluent_tag.public.name
   entity_name = "${data.confluent_schema_registry_cluster.cc_sr_cluster.id}:${confluent_kafka_cluster.cc_kafka_cluster.id}:${confluent_kafka_topic.products.topic_name}"
   entity_type = "kafka_topic"
 
@@ -348,7 +348,7 @@ resource "confluent_tag_binding" "orders" {
     secret = confluent_api_key.sr_cluster_key.secret
   }
 
-  tag_name = "Public"
+  tag_name = confluent_tag.public.name
   entity_name = "${data.confluent_schema_registry_cluster.cc_sr_cluster.id}:${confluent_kafka_cluster.cc_kafka_cluster.id}:${confluent_kafka_topic.orders.topic_name}"
   entity_type = "kafka_topic"
 

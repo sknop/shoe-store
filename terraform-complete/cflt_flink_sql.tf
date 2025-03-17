@@ -11,7 +11,7 @@ resource "confluent_api_key" "env-manager-flink-api-key" {
   }
 
   managed_resource {
-    id          = data.confluent_flink_region.cc_flink_compute_pool_region.region
+    id          = data.confluent_flink_region.cc_flink_compute_pool_region.id
     api_version = data.confluent_flink_region.cc_flink_compute_pool_region.api_version
     kind        = data.confluent_flink_region.cc_flink_compute_pool_region.kind
 
